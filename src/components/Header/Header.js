@@ -12,7 +12,7 @@ class Header extends Component{
           <img src={require('./../../assets/home.png')} alt="home-logo"/>
           <img src={require('./../../assets/search.png')} alt="search-logo"/>
         </div>
-        <h3>Page Title</h3>
+        <h4>Page Title</h4>
         <button className="header-logout-btn">Logout</button>
       </div>
     );
