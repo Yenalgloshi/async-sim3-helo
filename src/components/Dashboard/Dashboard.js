@@ -5,10 +5,41 @@ import Header from '../Header/Header';
 class Dashboard extends Component {
   render() {
     return (
-      <div className="dashView">
-        <Header />
-        Dashboard Page
+      <div className='dashView'>
+        <Header/>
+
+      <div className='dash-profile-content'>
+        <div className='dash-profile-preview'>
+          <img src="https://robohash.org/me" alt="me"/>
+          {/* below name will be rendered from state */}
+          <h3>Jason Begay</h3>
+          <button className='dash-edit-btn'>Edit Profile</button>
+        </div>
+        <div className='dash-profile-welcome'>
+          Welcome to Helo!  Find recommended friends based on your simularities, and even search for them by name.  The more you update your profile, the better recommendations we can make!
+        </div>
       </div>
+
+      <div className='dash-rec-list-wpr'>
+        <div className='dash-rec-sort'>
+          Recommended Friends
+          Sorted by
+          <select onChange=''
+                  ref=''
+                  className='dash-selector'
+                  value=''>
+            <option value="" disabled>All</option>
+            <option value="Gender">Gender</option>
+            <option value="Hobby">Hobby</option>
+          </select>
+        </div>
+        <div className='dash-rec-list'>
+          <div className='dash-rec-friend'>
+          </div>
+        </div>
+      </div>
+</div>
+
     );
   }
 }
