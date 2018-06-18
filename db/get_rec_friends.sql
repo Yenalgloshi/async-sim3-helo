@@ -1,0 +1,1 @@
+select * from helo_users where hobby = 'Music' and birth_year between 1969 - 15 and 1969 + 15;

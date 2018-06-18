@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import './Auth.css';
 
 class Auth extends Component {
@@ -8,7 +9,9 @@ class Auth extends Component {
         <div className='auth-content'>
           <img src={require('./../../assets/logo.png')} alt="helo-logo"/>
           <h1 className='auth-title'>Helo</h1>
-          <button className="auth-btn">Login / Register</button>
+          {/* <Link to='/Dashboard'> */}
+            <button className="auth-btn">Login / Register</button>
+          {/* </Link> */}
         </div>
       </div>
 

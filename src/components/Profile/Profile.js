@@ -17,7 +17,72 @@ class Profile extends Component {
       bMonth: '',
       bYear: 1918
     }
+
+  this.handleUpdateBtnClick = this.handleUpdateBtnClick.bind(this);
+  this.handleCancelBtnClick = this.handleCancelBtnClick.bind(this);
+  this.handleFirstNameInput = this.handleFirstNameInput.bind(this);
+  this.handleLastNameInput = this.handleLastNameInput.bind(this);
+  this.handleGenderSelector = this.handleGenderSelector.bind(this);
+  this.handleHairSelector = this.handleHairSelector.bind(this);
+  this.handleEyeSelector = this.handleEyeSelector.bind(this);
+  this.handleHobbySelector = this.handleHobbySelector.bind(this);
+  this.handleBDaySelector = this.handleBDaySelector.bind(this);
+  this.handleBMonthSelector = this.handleBMonthSelector.bind(this);
+  this.handleBYearSelector = this.handleBYearSelector.bind(this);
+
   }
+
+handleUpdateBtnClick(){
+  
+}
+
+handleCancelBtnClick(){
+  this.setState({firstName: '',
+                  lastName: '',
+                  gender: '',
+                  hairColor: '',
+                  eyeColor: '',
+                  hobby: '',
+                  bDay: 1,
+                  bMonth: '',
+                  bYear: 1918})
+}
+
+handleFirstNameInput(val){
+  this.setState({firstName: val})
+}
+
+handleLastNameInput(val){
+  this.setState({lastName: val})
+}
+
+handleGenderSelector(val){
+  this.setState({gender: val})
+}
+
+handleHairSelector(val){
+  this.setState({hairColor: val})
+}
+
+handleEyeSelector(val){
+  this.setState({eyeColor: val})
+}
+
+handleHobbySelector(val){
+  this.setState({hobby: val})
+}
+
+handleBDaySelector(val){
+  this.setState({bDay: val})
+}
+
+handleBMonthSelector(val){
+  this.setState({bMonth: val})
+}
+
+handleBYearSelector(val){
+  this.setState({bYear: val})
+}
   
   render() {
     let days = [];
@@ -43,28 +108,35 @@ class Profile extends Component {
           </div>
           <div className='profile-update-btns'>
             <button className='profile-update-btn'>Update</button>
-            <button className='profile-cancel-btn'>Cancel</button>
+            <button onClick={this.handleCancelBtnClick} 
+                    className='profile-cancel-btn'>Cancel</button>
           </div>
         </div>
         <div className='profile-edit'>
           <p>First Name</p>
-          <input className='profile-firstName' type="text"/>
+          <input onChange={(e) => this.handleFirstNameInput(e.target.value)} 
+                 className='profile-firstName' 
+                 type="text"
+                 value={this.state.firstName}/>
           <p>Last Name</p>
-          <input className='profile-lastName' type="text"/>
+          <input onChange={(e) => this.handleLastNameInput(e.target.value)}
+                 className='profile-lastName' 
+                 type="text"
+                 value={this.state.lastName}/>
           <p>Gender</p>
-          <select onChange=''
+          <select onChange={(e) => this.handleGenderSelector(e.target.value)}
                   ref=''
                   className='profile-gender-selector'
-                  value=''>
+                  value={this.state.gender}>
             <option value="" disabled></option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
           <p>Hair Color</p>
-          <select onChange=''
+          <select onChange={(e) => this.handleHairSelector(e.target.value)}
                   ref=''
                   className='profile-hair-selector'
-                  value=''>
+                  value={this.state.hairColor}>
             <option value="" disabled></option>
             <option value="Black">Black</option>
             <option value="Brown">Brown</option>
@@ -76,10 +148,10 @@ class Profile extends Component {
             <option value="Bald">Bald</option>
           </select>
           <p>Eye Color</p>
-          <select onChange=''
+          <select onChange={(e) => this.handleEyeSelector(e.target.value)}
                   ref=''
                   className='profile-eye-selector'
-                  value=''>
+                  value={this.state.eyeColor}>
             <option value="" disabled></option>
             <option value="Amber">Amber</option>
             <option value="Blue">Blue</option>
@@ -91,10 +163,10 @@ class Profile extends Component {
             <option value="Red">Red</option>
           </select>
           <p>Hobby</p>
-          <select onChange=''
+          <select onChange={(e) => this.handleHobbySelector(e.target.value)}
                   ref=''
                   className='profile-hobby-selector'
-                  value=''>
+                  value={this.state.hobby}>
             <option value="" disabled></option>
             <option value="Video Games">Video Games</option>
             <option value="Reading">Reading</option>
@@ -113,17 +185,17 @@ class Profile extends Component {
             <option value="Movies">Movies</option>
           </select>
           <p>Birthday Day</p>
-          <select onChange=''
+          <select onChange={(e) => this.handleBDaySelector(e.target.value)}
                   ref=''
                   className='profile-bDay-selector'
-                  value=''>
+                  value={this.state.bDay}>
                   {days}
           </select>
           <p>Birthday Month</p>
-          <select onChange=''
+          <select onChange={(e) => this.handleBMonthSelector(e.target.value)}
                   ref=''
                   className='profile-bMonth-selector'
-                  value=''>
+                  value={this.state.bMonth}>
             <option value="" disabled></option>
             <option value="January">January</option>
             <option value="February">February</option>
@@ -139,10 +211,10 @@ class Profile extends Component {
             <option value="December">December</option>
           </select>
           <p>Birthday Year</p>
-          <select onChange=''
+          <select onChange={(e) => this.handleBYearSelector(e.target.value)}
                   ref=''
                   className='profile-bYear-selector'
-                  value=''>
+                  value={this.state.bYear}>
                   {years}
           </select>
         </div>
