@@ -7,11 +7,11 @@ class Auth extends Component {
     return (
       <div className='auth'>
         <div className='auth-content'>
-          <img src={require('./../../assets/logo.png')} alt="helo-logo"/>
+          <img src={require('./../../assets/logo.png')} className='auth-logo' alt="helo-logo"/>
           <h1 className='auth-title'>Helo</h1>
-          {/* <Link to='/Dashboard'> */}
+          <Link to='/Dashboard'>
             <button className="auth-btn">Login / Register</button>
-          {/* </Link> */}
+          </Link>
         </div>
       </div>
 

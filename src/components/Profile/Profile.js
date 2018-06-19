@@ -32,6 +32,10 @@ class Profile extends Component {
 
   }
 
+componentDidMount(){
+
+}  
+
 handleUpdateBtnClick(){
   
 }

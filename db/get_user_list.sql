@@ -1,0 +1,1 @@
+select first_name, last_name, profile_img from helo_users limit 24 offset 0;

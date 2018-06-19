@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 import './Dashboard.css';
 import Header from '../Header/Header';
 
@@ -13,17 +14,12 @@ class Dashboard extends Component {
       sortCriteria: ""
     }
 
-    this.handleEditBtnClick = this.handleEditBtnClick.bind(this);
     this.handleSortSelector = this.handleSortSelector.bind(this);
     this.handleAddFrndBtnClick = this.handleAddFrndBtnClick.bind(this);
 
   }
 
   componentDidMount(){
-
-  }
-
-  handleEditBtnClick(){
 
   }
 
@@ -56,8 +52,9 @@ class Dashboard extends Component {
                 Begay
               </p>
             </h3>
-            <button onClick={this.handleEditBtnClick} 
-                    className='dash-edit-btn'>Edit Profile</button>
+            <Link to='/Profile'>
+              <button className='dash-edit-btn'>Edit Profile</button>
+            </Link>
           </div>
           <div className='dash-profile-welcome'>
             Welcome to Helo!  Find recommended friends based on your simularities, and even search for them by name.  The more you update your profile, the better recommendations we can make!
