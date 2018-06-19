@@ -99,43 +99,50 @@ handleBYearSelector(val){
       <div className='profileView'>
      <Header/>
 
-     <div className='profile-wpr'>
+     <div className='profile-container'>
         <div className='profile-info'>
           <div className='profile-picName'>
-            <img src="https://robohash.org/me" alt="me"/>
+            <img src="https://robohash.org/me" className='profile-img' alt="me"/>
             {/* below name will be rendered from state */}
-            <h3>Jason Begay</h3>
+            <h3 className='profile-name-wpr'>
+              <p className='profile-name'>
+                Jason
+              </p>
+              <p className='profile-name'>
+                Begay
+              </p>
+            </h3>
           </div>
-          <div className='profile-update-btns'>
+          <div className='profile-btns'>
             <button className='profile-update-btn'>Update</button>
             <button onClick={this.handleCancelBtnClick} 
                     className='profile-cancel-btn'>Cancel</button>
           </div>
         </div>
         <div className='profile-edit'>
-          <p>First Name</p>
+          <p className='profile-sel-title'>First Name</p>
           <input onChange={(e) => this.handleFirstNameInput(e.target.value)} 
-                 className='profile-firstName' 
+                 className='profile-edit-name' 
                  type="text"
                  value={this.state.firstName}/>
-          <p>Last Name</p>
+          <p className='profile-sel-title'>Last Name</p>
           <input onChange={(e) => this.handleLastNameInput(e.target.value)}
-                 className='profile-lastName' 
+                 className='profile-edit-name' 
                  type="text"
                  value={this.state.lastName}/>
-          <p>Gender</p>
+          <p className='profile-sel-title'>Gender</p>
           <select onChange={(e) => this.handleGenderSelector(e.target.value)}
                   ref=''
-                  className='profile-gender-selector'
+                  className='profile-selector'
                   value={this.state.gender}>
             <option value="" disabled></option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <p>Hair Color</p>
+          <p className='profile-sel-title'>Hair Color</p>
           <select onChange={(e) => this.handleHairSelector(e.target.value)}
                   ref=''
-                  className='profile-hair-selector'
+                  className='profile-selector'
                   value={this.state.hairColor}>
             <option value="" disabled></option>
             <option value="Black">Black</option>
@@ -147,10 +154,10 @@ handleBYearSelector(val){
             <option value="White">White</option>
             <option value="Bald">Bald</option>
           </select>
-          <p>Eye Color</p>
+          <p className='profile-sel-title'>Eye Color</p>
           <select onChange={(e) => this.handleEyeSelector(e.target.value)}
                   ref=''
-                  className='profile-eye-selector'
+                  className='profile-selector'
                   value={this.state.eyeColor}>
             <option value="" disabled></option>
             <option value="Amber">Amber</option>
@@ -162,10 +169,10 @@ handleBYearSelector(val){
             <option value="Hazel">Hazel</option>
             <option value="Red">Red</option>
           </select>
-          <p>Hobby</p>
+          <p className='profile-sel-title'>Hobby</p>
           <select onChange={(e) => this.handleHobbySelector(e.target.value)}
                   ref=''
-                  className='profile-hobby-selector'
+                  className='profile-selector'
                   value={this.state.hobby}>
             <option value="" disabled></option>
             <option value="Video Games">Video Games</option>
@@ -184,17 +191,17 @@ handleBYearSelector(val){
             <option value="Guns">Guns</option>
             <option value="Movies">Movies</option>
           </select>
-          <p>Birthday Day</p>
+          <p className='profile-sel-title'>Birthday Day</p>
           <select onChange={(e) => this.handleBDaySelector(e.target.value)}
                   ref=''
-                  className='profile-bDay-selector'
+                  className='profile-selector'
                   value={this.state.bDay}>
                   {days}
           </select>
-          <p>Birthday Month</p>
+          <p className='profile-sel-title'>Birthday Month</p>
           <select onChange={(e) => this.handleBMonthSelector(e.target.value)}
                   ref=''
-                  className='profile-bMonth-selector'
+                  className='profile-selector'
                   value={this.state.bMonth}>
             <option value="" disabled></option>
             <option value="January">January</option>
@@ -210,10 +217,10 @@ handleBYearSelector(val){
             <option value="November">November</option>
             <option value="December">December</option>
           </select>
-          <p>Birthday Year</p>
+          <p className='profile-sel-title'>Birthday Year</p>
           <select onChange={(e) => this.handleBYearSelector(e.target.value)}
                   ref=''
-                  className='profile-bYear-selector'
+                  className='profile-selector'
                   value={this.state.bYear}>
                   {years}
           </select>
