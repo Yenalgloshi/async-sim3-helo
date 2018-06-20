@@ -1,12 +1,13 @@
 .profileView{
   background-color: #f2f2f2;
   height: 100%;
+  padding-top: 20px;
 }
 
 .profile-container{
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 615px;
   height: 88vh;
 }
 
@@ -20,7 +21,7 @@
   box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.2);
   width: 615px;
   height: 105px;
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 .profile-picName{
@@ -42,6 +43,7 @@
 }
 
 .profile-name-wpr{
+  font-family: 'Open Sans', sans-serif;
   justify-content: center;
   margin-left: 10px;
 }
@@ -92,6 +94,7 @@
 }
 
 .profile-sel-title{
+  font-family: 'Open Sans', sans-serif;
   margin-left: 70px;
   margin-bottom: 3px;
 }

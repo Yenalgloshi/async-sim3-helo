@@ -46,10 +46,10 @@ class Dashboard extends Component {
             {/* below name will be rendered from state */}
             <h3 className='dash-name-wpr'>
               <p className='dash-profile-name'>
-                Jason
+                Aiath
               </p>
               <p className='dash-profile-name'>
-                Begay
+                Xornackiathis
               </p>
             </h3>
             <Link to='/Profile'>

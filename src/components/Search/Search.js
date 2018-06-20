@@ -77,13 +77,17 @@ handleNameFilterSelector(){
               <button className='search-reset-btn'>Reset</button>
           </div>
           <div className='search-list-wpr'>
-            {this.state.searchResults.map((e, i) => {
+            {this.state.searchResults.map((friend, i) => {
               return(
                 <div className='search-fr-container'>
-                  <img className='search-fr-img' src={e.profile_img} alt=""/>
-                  <p className='search-fr-name'>{e.first_name}</p>
-                  <p className='search-fr-name'>{e.last_name}</p>
-                  <button className='search-fr-btn'>Add Friend</button>
+                  <img className='search-fr-img' src={friend.profile_img} alt=""/>
+                  <div className='search-fr-nameBtn-wpr'>
+                    <div className='search-fr-name-wpr'>
+                      <p className='search-fr-name'>{friend.first_name}</p>
+                      <p className='search-fr-name'>{friend.last_name}</p>
+                    </div>
+                    <button className='search-remove-btn'>Remove Friend</button>
+                  </div>
                 </div>
               )})
             }
