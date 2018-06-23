@@ -86,7 +86,7 @@ handleBMonthSelector(val){
 
 handleBYearSelector(val){
   this.setState({bYear: val})
-}
+} 
   
   render() {
     let days = [];
@@ -101,7 +101,7 @@ handleBYearSelector(val){
     
     return (
       <div className='profileView'>
-     <Header/>
+     <Header title='Profile'/>
 
      <div className='profile-container'>
         <div className='profile-info'>

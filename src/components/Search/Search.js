@@ -60,7 +60,7 @@ handleNameFilterSelector(){
   render() {
     return (
       <div className='searchView'>
-        <Header/>
+        <Header title='Search'/>
 
         <div className='search-content'>
           <div className='search-tools'>

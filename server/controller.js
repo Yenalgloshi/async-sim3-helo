@@ -1,6 +1,5 @@
 module.exports = {
   loginUser: (req, res, next) => {
-    const db = req.app.get('db');
 
   },
 
@@ -21,7 +20,6 @@ module.exports = {
 
   friendsList: (req, res, next) => {
     const db = req.app.get('db');
-
 
     db.get_friends(req.params)
     .then(friends => { res.status(200).send(friends);})

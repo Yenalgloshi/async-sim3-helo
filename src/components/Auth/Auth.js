@@ -9,9 +9,7 @@ class Auth extends Component {
         <div className='auth-content'>
           <img src={require('./../../assets/logo.png')} className='auth-logo' alt="helo-logo"/>
           <h1 className='auth-title'>Helo</h1>
-          <Link to='/Dashboard'>
-            <button className="auth-btn">Login / Register</button>
-          </Link>
+            <a href={process.env.REACT_APP_LOGIN} className="auth-btn">Login / Register</a>
         </div>
       </div>
 

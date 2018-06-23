@@ -11,7 +11,8 @@ class Dashboard extends Component {
     this.state = {
       recommendations: [],
       sortedRecommendations: [],
-      sortCriteria: ""
+      sortCriteria: "",
+      userInfo:[]
     }
 
     this.handleSortSelector = this.handleSortSelector.bind(this);
@@ -19,9 +20,14 @@ class Dashboard extends Component {
 
   }
 
-  componentDidMount(){
-
+  componentDidMount() {
+    axios.get('/api/auth/setUser').then(res => {
+      this.setState({
+        userInfo: res.data
+      })
+    })
   }
+   
 
   handleSortSelector(val){
     this.setState({sortCriteria: val})
@@ -38,7 +44,7 @@ class Dashboard extends Component {
 
     return (
       <div className='dashView'>
-        <Header/>
+        <Header title='Dashboard'/>
       <div className='dash-container'>
         <div className='dash-profile-content'>
           <div className='dash-profile-preview'>

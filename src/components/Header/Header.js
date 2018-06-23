@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import './Header.css';
-import {withRouter} from 'react-router';
+// import {withRouter} from 'react-router';
 
 class Header extends Component{
   
@@ -17,13 +17,11 @@ class Header extends Component{
             <img src={require('./../../assets/search.png')} alt="search-logo"/>
           </Link>
         </div>
-        <h4>Page Title</h4>
-        <Link to='/'>
-          <button className="header-logout-btn">Logout</button>
-        </Link>
+        <h4>{this.props.title}</h4>
+        <a href={process.env.REACT_APP_LOGOUT} className="header-logout-btn">Logout</a>
       </div>
     );
   }
 }
 
-export default withRouter(Header);
+export default Header;
