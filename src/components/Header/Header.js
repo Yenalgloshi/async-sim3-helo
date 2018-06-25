@@ -18,6 +18,9 @@ class Header extends Component{
           </Link>
         </div>
         <h4>{this.props.title}</h4>
+        {/* Buttons usually fire an axios call, and because axios requests (http requests) have some security issues with them and <a> tag is used instead of a button. */}
+
+        {/* Referencing the .env file will make hosting much easier.  Also, in order to use the .env in your front end, you have to set up the environmental variable you are referencing in your .env file with "REACT_APP" */}
         <a href={process.env.REACT_APP_LOGOUT} className="header-logout-btn">Logout</a>
       </div>
     );

@@ -5,7 +5,7 @@ module.exports = {
 
   setUser: (req, res, next) => {
     const db = req.app.get('db');
-
+    
   },
 
   authUser: (req, res, next) => {
