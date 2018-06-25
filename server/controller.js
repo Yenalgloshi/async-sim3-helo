@@ -5,7 +5,7 @@ module.exports = {
 
   setUser: (req, res, next) => {
     const db = req.app.get('db');
-    
+
   },
 
   authUser: (req, res, next) => {
@@ -53,6 +53,17 @@ module.exports = {
       console.log(err);
       res.status(500).send(err);
     });
+  },
+  
+  totNumOfUsers: (req, res, next) => {
+    const db = req.app.get('db');
+    
+    db.get_num_users()
+    .then(totalNum => {res.status(200).send(totalNum);})
+    .catch(err => {
+      console.log (err);
+      res.status(500).send(err);
+    }); 
   },
 
   searchUsers: (req, res, next) => {

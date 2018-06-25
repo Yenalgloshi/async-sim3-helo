@@ -95,13 +95,14 @@ app.get('/api/auth/logout', (req, res) => {
 })
 
 app.get('/api/friend/list', ctrl.friendsList)
-app.post('api/friend/add', ctrl.addFriend)
-app.post('api/friend/remove', ctrl.removeFriend)
+app.post('/api/friend/add', ctrl.addFriend)
+app.post('/api/friend/remove', ctrl.removeFriend)
 app.patch('/api/patch/:id', ctrl.editUserProfile)
 app.get('/api/user/list', ctrl.listUsers)
-app.get('api/user/search', ctrl.searchUsers)
-app.post('api/recommended', ctrl.recFriendList)
-app.post('recommended/add', ctrl.addRecFriend)
+app.get('/api/user/search', ctrl.searchUsers)
+app.get('/api/user/total', ctrl.totNumOfUsers)
+app.post('/api/recommended', ctrl.recFriendList)
+app.post('/recommended/add', ctrl.addRecFriend)
 
 //LISTEN
 const port = 3333;

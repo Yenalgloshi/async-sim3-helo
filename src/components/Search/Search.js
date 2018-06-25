@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './Search.css';
 import Header from '../Header/Header';
+import Pagination from '../Pagination/Pagination';
 
 class Search extends Component {
   constructor(){
@@ -25,7 +26,7 @@ class Search extends Component {
 componentDidMount(){
   axios.get('/api/user/list').then(response => {
     this.setState({searchResults: response.data})
-    console.log(this.state.searchResults)
+    // console.log(this.state.searchResults)
   })
 }
 
@@ -79,7 +80,7 @@ handleNameFilterSelector(){
           <div className='search-list-wpr'>
             {this.state.searchResults.map((friend, i) => {
               return(
-                <div className='search-fr-container'>
+                <div className='search-fr-container' key={i}>
                   <img className='search-fr-img' src={friend.profile_img} alt=""/>
                   <div className='search-fr-nameBtn-wpr'>
                     <div className='search-fr-name-wpr'>
@@ -93,7 +94,7 @@ handleNameFilterSelector(){
             }
           </div>
           <div className='search-pagination'>
-            pagination
+            <Pagination />
           </div>
         </div>
       </div>
