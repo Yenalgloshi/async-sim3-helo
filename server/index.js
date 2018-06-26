@@ -30,38 +30,41 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// The Auth0 strategy is set up here so passport knows what to use when authenticating. This tells passport to use a new Auth0Strategy and invoke the Auth0Strategy. The first parameter is a connection object (how we get to Auth0). The key:value pairs point to the information that was set up in the .env file.
+// #2  The Auth0 strategy is set up here so passport knows what to use when authenticating. This tells passport to use a new Auth0Strategy and invoke the Auth0Strategy. The first parameter is a connection object (how we get to Auth0). The key:value pairs point to the information that was set up in the .env file.
 passport.use(new Auth0Strategy(
   {
    domain: process.env.DOMAIN,
    clientID: process.env.CLIENT_ID,
    clientSecret: process.env.CLIENT_SECRET,
    callbackURL: process.env.CALLBACK_URL,
-   scope: 'open email'
+   scope: 'openid profile email'
   },
   // The second parameter (this function), is what runs once we get back from Auth0. Having returned from Auth0, access is now available to some things we brought back with us. The "profile" parameter has all the information about the user.
   function(accessToken, refreshToken, extraParams, profile, done){
     console.log('profile', profile);
     app.get('db').authenticate_user(profile.id).then(user => {
       if(user[0]) {
-        done(null, profile);
+        console.log(user[0])
+        done(null, user[0]);
 
       } else {
-        user.get('db').register_user(profile.id)
+        app.get('db').register_user(profile.id).then(user => {
+          done(null, user[0]);
+
+        })
       }
     })
-    done(null, profile);
   }
  ))
 
-//  Serialize (fires after authenticating with Auth0)
+//  #3  Serialize (fires after authenticating with Auth0)
  passport.serializeUser((user, done) => {
   // This function accepts the user as a parameter. This will determine what information is saved on the cookie. This is what we are sending to our browser to remember.
   console.log('serialize', user);
   done(null, user);
 });
 
-// Deserialize (fires when any endpoints are hit)
+// #5  Deserialize (fires when any endpoints are hit)
 passport.deserializeUser((user, done) => {
   //  The serialize function accepts whatever was set on the cookie as a parameter. This takes the cookie and determines what parts of that cookie will be accessible on the back end.
   console.log('deserialize', user);
@@ -72,14 +75,15 @@ passport.deserializeUser((user, done) => {
 
 //ENDPOINTS
 // when you are using <a> tags, your endpoint always has to use app.get.
-// This endpoint to handle the authentication using passport.authenticate
+// #1  This endpoint to handle the authentication using passport.authenticate
 app.get('/api/auth/login', passport.authenticate('auth0', {
-  // where to redirect someone upon a successful login
+  // #4  where to redirect someone upon a successful login
   successRedirect: 'http://localhost:3000/#/dashboard',
   // where to redirect someone who fails to login correctly
   failureRedirect: 'http://localhost:3000/#/'
 }))
 
+//  #6  Once authenticated, user info is available
 app.get('/api/auth/authenticated', (req, res) => {
   if (req.user) {
     res.status(200).send(req.user);
@@ -88,6 +92,7 @@ app.get('/api/auth/authenticated', (req, res) => {
   }
 })
 
+//  #7  Logout
 app.get('/api/auth/logout', (req, res) => {
   // req.logOut();
   req.session.destroy();

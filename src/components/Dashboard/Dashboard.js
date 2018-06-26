@@ -21,12 +21,12 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/auth/setUser').then(res => {
+    axios.get('/api/auth/authenticated').then(res => {
       this.setState({
         userInfo: res.data
       })
+      console.log(res.data)
     })
-    console.log(this.state.userInfo)
   }
    
 
@@ -49,14 +49,14 @@ class Dashboard extends Component {
       <div className='dash-container'>
         <div className='dash-profile-content'>
           <div className='dash-profile-preview'>
-            <img src="https://robohash.org/me" className='dash-profile-img' alt="me"/>
+            <img src={`https://robohash.org/${this.state.userInfo.user_id}`} className='dash-profile-img' alt="me"/>
             {/* below name will be rendered from state */}
             <h3 className='dash-name-wpr'>
               <p className='dash-profile-name'>
-                Aiath
+                {this.state.userInfo.first_name}
               </p>
               <p className='dash-profile-name'>
-                Xornackiathis
+              {this.state.userInfo.last_name}
               </p>
             </h3>
             <Link to='/Profile'>
