@@ -73,7 +73,15 @@ handleUpdateBtnClick(){
 handleCancelBtnClick(){
   axios.get('/api/auth/authenticated').then(res => {
     this.setState({
-      userInfo: res.data
+      first_name: res.data.first_name,
+      last_name: res.data.last_name,
+      gender: res.data.gender,
+      hair_color: res.data.hair_color,
+      eye_color: res.data.eye_color,
+      hobby: res.data.hobby,
+      birth_day: res.data.birth_day,
+      birth_month: res.data.birth_month,
+      birth_year: res.data.birth_year,
     })
   })
 }

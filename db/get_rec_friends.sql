@@ -1,1 +1,2 @@
-select * from helo_users where hobby = 'Music' and birth_year between 1969 - 15 and 1969 + 15;
+select first_name, last_name, profile_img from helo_users 
+where user_id != $1;

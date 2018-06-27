@@ -79,7 +79,12 @@ module.exports = {
   recFriendList: (req, res, next) => {
     const db = req.app.get('db');
 
-    
+    db.get_rec_friends()
+    .then(rec_friends => {res.status(200).send(rec_friends);})
+    .catch(err => {
+      console.log (err);
+      res.status(500).send(err);
+    }); 
   },
 
   addRecFriend: (req, res, next) => {

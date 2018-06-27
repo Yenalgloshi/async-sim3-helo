@@ -26,7 +26,13 @@ class Dashboard extends Component {
       this.setState({userInfo: res.data})
     })
 
-    axios.get()
+    axios.get('/api/recommended').then(res => {
+      this.state({recommendations: res.data})
+    })
+
+    // Another axios request to check to see if a user is on 
+    // sessions .then and .catch will be used to redirect if
+    // necessary.
   }
   
   
