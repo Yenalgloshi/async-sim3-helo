@@ -1,5 +1,6 @@
 import './Profile.css';
 import React, { Component } from 'react';
+import axios from 'axios';
 import Header from '../Header/Header';
 
 class Profile extends Component {
@@ -7,15 +8,17 @@ class Profile extends Component {
     super()
 
     this.state = {
-      firstName: '',
-      lastName: '',
+      userId: null,
+      first_name: '',
+      last_name: '',
       gender: '',
-      hairColor: '',
-      eyeColor: '',
+      hair_color: '',
+      eye_color: '',
       hobby: '',
-      bDay: 1,
-      bMonth: '',
-      bYear: 1918
+      birth_day: 1,
+      birth_month: '',
+      birth_year: 1918,
+      profile_img: '' 
     }
 
   this.handleUpdateBtnClick = this.handleUpdateBtnClick.bind(this);
@@ -30,34 +33,57 @@ class Profile extends Component {
   this.handleBMonthSelector = this.handleBMonthSelector.bind(this);
   this.handleBYearSelector = this.handleBYearSelector.bind(this);
 
-  }
+}
 
 componentDidMount(){
-
+  axios.get('/api/auth/authenticated').then(res => {
+    this.setState({
+      userID: res.data.user_id,
+      first_name: res.data.first_name,
+      last_name: res.data.last_name,
+      gender: res.data.gender,
+      hair_color: res.data.hair_color,
+      eye_color: res.data.eye_color,
+      hobby: res.data.hobby,
+      birth_day: res.data.birth_day,
+      birth_month: res.data.birth_month,
+      birth_year: res.data.birth_year,
+      profile_img: res.data.profile_img
+    })
+  })
 }  
 
 handleUpdateBtnClick(){
-  
+  let promise = axios.patch(`/api/patch/${this.state.userID}`, 
+    { first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      gender: this.state.gender,
+      hair_color: this.state.hair_color,
+      eye_color: this.state.eye_color,
+      hobby: this.state.hobby,
+      birth_day: this.state.birth_day,
+      birth_month: this.state.birth_month,
+      birth_year: this.state.birth_year
+    })
+    promise.then(res => {
+    console.log('update successful')
+  })  
 }
 
 handleCancelBtnClick(){
-  this.setState({firstName: '',
-                  lastName: '',
-                  gender: '',
-                  hairColor: '',
-                  eyeColor: '',
-                  hobby: '',
-                  bDay: 1,
-                  bMonth: '',
-                  bYear: 1918})
+  axios.get('/api/auth/authenticated').then(res => {
+    this.setState({
+      userInfo: res.data
+    })
+  })
 }
 
 handleFirstNameInput(val){
-  this.setState({firstName: val})
+  this.setState({first_name: val})
 }
 
 handleLastNameInput(val){
-  this.setState({lastName: val})
+  this.setState({last_name: val})
 }
 
 handleGenderSelector(val){
@@ -65,11 +91,11 @@ handleGenderSelector(val){
 }
 
 handleHairSelector(val){
-  this.setState({hairColor: val})
+  this.setState({hair_color: val})
 }
 
 handleEyeSelector(val){
-  this.setState({eyeColor: val})
+  this.setState({eye_color: val})
 }
 
 handleHobbySelector(val){
@@ -77,15 +103,15 @@ handleHobbySelector(val){
 }
 
 handleBDaySelector(val){
-  this.setState({bDay: val})
+  this.setState({birth_day: val})
 }
 
 handleBMonthSelector(val){
-  this.setState({bMonth: val})
+  this.setState({birth_month: val})
 }
 
 handleBYearSelector(val){
-  this.setState({bYear: val})
+  this.setState({birth_year: val})
 } 
   
   render() {
@@ -98,7 +124,6 @@ handleBYearSelector(val){
       for (let i = 1918; i < 2011; i++) {
       years.push(<option value={i} key={i}>{i}</option>)
       }
-    
     return (
       <div className='profileView'>
      <Header title='Profile'/>
@@ -106,19 +131,22 @@ handleBYearSelector(val){
      <div className='profile-container'>
         <div className='profile-info'>
           <div className='profile-picName'>
-            <img src="https://robohash.org/me" className='profile-img' alt="me"/>
+            <img src={this.state.profile_img} 
+                 className='profile-img' 
+                 alt="me"/>
             {/* below name will be rendered from state */}
             <h3 className='profile-name-wpr'>
               <p className='profile-name'>
-                Jason
+                {this.state.first_name}
               </p>
               <p className='profile-name'>
-                Begay
+              {this.state.last_name}
               </p>
             </h3>
           </div>
           <div className='profile-btns'>
-            <button className='profile-update-btn'>Update</button>
+            <button onClick={this.handleUpdateBtnClick}
+                    className='profile-update-btn'>Update</button>
             <button onClick={this.handleCancelBtnClick} 
                     className='profile-cancel-btn'>Cancel</button>
           </div>
@@ -128,12 +156,12 @@ handleBYearSelector(val){
           <input onChange={(e) => this.handleFirstNameInput(e.target.value)} 
                  className='profile-edit-name' 
                  type="text"
-                 value={this.state.firstName}/>
+                 value={this.state.first_name}/>
           <p className='profile-sel-title'>Last Name</p>
           <input onChange={(e) => this.handleLastNameInput(e.target.value)}
                  className='profile-edit-name' 
                  type="text"
-                 value={this.state.lastName}/>
+                 value={this.state.last_name}/>
           <p className='profile-sel-title'>Gender</p>
           <select onChange={(e) => this.handleGenderSelector(e.target.value)}
                   ref=''
@@ -147,7 +175,7 @@ handleBYearSelector(val){
           <select onChange={(e) => this.handleHairSelector(e.target.value)}
                   ref=''
                   className='profile-selector'
-                  value={this.state.hairColor}>
+                  value={this.state.hair_color}>
             <option value="" disabled></option>
             <option value="Black">Black</option>
             <option value="Brown">Brown</option>
@@ -162,7 +190,7 @@ handleBYearSelector(val){
           <select onChange={(e) => this.handleEyeSelector(e.target.value)}
                   ref=''
                   className='profile-selector'
-                  value={this.state.eyeColor}>
+                  value={this.state.eye_color}>
             <option value="" disabled></option>
             <option value="Amber">Amber</option>
             <option value="Blue">Blue</option>
@@ -199,14 +227,14 @@ handleBYearSelector(val){
           <select onChange={(e) => this.handleBDaySelector(e.target.value)}
                   ref=''
                   className='profile-selector'
-                  value={this.state.bDay}>
+                  value={this.state.birth_day}>
                   {days}
           </select>
           <p className='profile-sel-title'>Birthday Month</p>
           <select onChange={(e) => this.handleBMonthSelector(e.target.value)}
                   ref=''
                   className='profile-selector'
-                  value={this.state.bMonth}>
+                  value={this.state.birth_month}>
             <option value="" disabled></option>
             <option value="January">January</option>
             <option value="February">February</option>
@@ -225,7 +253,7 @@ handleBYearSelector(val){
           <select onChange={(e) => this.handleBYearSelector(e.target.value)}
                   ref=''
                   className='profile-selector'
-                  value={this.state.bYear}>
+                  value={this.state.birth_year}>
                   {years}
           </select>
         </div>

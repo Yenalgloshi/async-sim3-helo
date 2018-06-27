@@ -1,2 +1,2 @@
-insert into helo_users (auth0_id ) 
-values ( $1 ) returning *;
+insert into helo_users (auth0_id, profile_img ) 
+values ( $1, $2 ) returning *;

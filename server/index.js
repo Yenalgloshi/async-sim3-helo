@@ -41,14 +41,14 @@ passport.use(new Auth0Strategy(
   },
   // The second parameter (this function), is what runs once we get back from Auth0. Having returned from Auth0, access is now available to some things we brought back with us. The "profile" parameter has all the information about the user.
   function(accessToken, refreshToken, extraParams, profile, done){
-    console.log('profile', profile);
+    console.log('profile', profile.id);
     app.get('db').authenticate_user(profile.id).then(user => {
       if(user[0]) {
         console.log(user[0])
         done(null, user[0]);
 
       } else {
-        app.get('db').register_user(profile.id).then(user => {
+        app.get('db').register_user(profile.id, `https://robohash.org/${profile.user_id}`).then(user => {
           done(null, user[0]);
 
         })

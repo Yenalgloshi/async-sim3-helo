@@ -3,11 +3,6 @@ module.exports = {
 
   },
 
-  authUser: (req, res, next) => {
-    const db = req.app.get('db');
-
-  },
-
   logoutUser: (req, res, next) => {
     const db = req.app.get('db');
 
@@ -16,7 +11,7 @@ module.exports = {
   friendsList: (req, res, next) => {
     const db = req.app.get('db');
 
-    db.get_friends(req.params)
+    db.get_friends(req.user_id)
     .then(friends => { res.status(200).send(friends);})
     .catch( err => {
       console.log(err);
@@ -37,6 +32,21 @@ module.exports = {
   editUserProfile: (req, res, next) => {
     const db = req.app.get('db');
 
+    db.update_profile(req.params.id,
+                      req.body.first_name,
+                      req.body.last_name,
+                      req.body.gender,
+                      req.body.hair_color,
+                      req.body.eye_color,
+                      req.body.hobby,
+                      req.body.birth_day,
+                      req.body.birth_month,
+                      req.body.birth_year)
+    .then(edits => { res.status(200).send(edits);})
+    .catch( err => {
+      console.log(err);
+      res.status(500).send(err);
+    });
   },
 
   listUsers: (req, res, next) => {

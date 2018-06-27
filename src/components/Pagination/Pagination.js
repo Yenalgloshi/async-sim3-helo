@@ -25,6 +25,8 @@ class Pagination extends Component {
 
 
 render() {
+  let offset = calcPages * 8;
+  console.log(offset)
   let calcPages = Math.floor(this.state.searchCnt/8);
   let pgArr = [];
   for (var i=1; i<=calcPages; i++){
