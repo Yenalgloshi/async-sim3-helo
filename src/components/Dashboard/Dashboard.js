@@ -11,8 +11,8 @@ class Dashboard extends Component {
     this.state = {
       recommendations: [],
       sortedRecommendations: [],
-      sortCriteria: "",
-      userInfo:[]
+      sortCriteria: '',
+      userInfo:{}
     }
 
     this.handleSortSelector = this.handleSortSelector.bind(this);
@@ -22,6 +22,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     axios.get('/api/auth/authenticated').then(res => {
+      // console.log(res.data)
       this.setState({userInfo: res.data})
     })
 
@@ -47,8 +48,12 @@ class Dashboard extends Component {
   
   
   render() {
-    
-    let displaySortedRec;
+    let userCriteria = this.state.userInfo[this.state.sortCriteria];
+    let filteredRecFriends = this.state.recommendations.filter((val) => {
+      return val[this.state.sortCriteria] === userCriteria
+    })
+    console.log(userCriteria)
+    console.log(filteredRecFriends)
 
     return (
       <div className='dashView'>
@@ -86,15 +91,17 @@ class Dashboard extends Component {
                       ref=''
                       className='dash-selector'
                       value={this.state.sortCriteria}>
-                <option value="" disabled>All</option>
-                <option value="Gender">Gender</option>
-                <option value="Hobby">Hobby</option>
+                <option value="">All</option>
+                <option value="gender">Gender</option>
+                <option value="hobby">Hobby</option>
+                <option value="eye_color">Eye Color</option>
+                <option value="hair_color">Hair Color</option>
               </select>
             </div>
 
           </div>
           <div className='search-list-wpr'>
-            {this.state.recommendations.map((recFriend, i) => {
+            {filteredRecFriends.map((recFriend, i) => {
               return(
                 <div className='search-fr-container' key={i}>
                   <img className='search-fr-img' src={recFriend.profile_img} alt=""/>
