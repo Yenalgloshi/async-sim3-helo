@@ -26,7 +26,7 @@ class Dashboard extends Component {
     })
 
     axios.get('/api/recommended').then(res => {
-      this.state({recommendations: res.data})
+      this.setState({recommendations: res.data})
     })
 
     // Another axios request to check to see if a user is on 
@@ -39,8 +39,10 @@ class Dashboard extends Component {
     this.setState({sortCriteria: val})
   }
   
-  handleAddFrndBtnClick(){
-    
+  handleAddFrndBtnClick(friendID){
+    let promise = axios.post('/recommended/add', {friendID})
+    promise.then(res => {this.setState( {recommendations: res.data} )
+    })
   }
   
   
@@ -92,16 +94,17 @@ class Dashboard extends Component {
 
           </div>
           <div className='search-list-wpr'>
-            {this.state.recommendations.map((friend, i) => {
+            {this.state.recommendations.map((recFriend, i) => {
               return(
                 <div className='search-fr-container' key={i}>
-                  <img className='search-fr-img' src={friend.profile_img} alt=""/>
+                  <img className='search-fr-img' src={recFriend.profile_img} alt=""/>
                   <div className='search-fr-nameBtn-wpr'>
                     <div className='search-fr-name-wpr'>
-                      <p className='search-fr-name'>{friend.first_name}</p>
-                      <p className='search-fr-name'>{friend.last_name}</p>
+                      <p className='search-fr-name'>{recFriend.first_name}</p>
+                      <p className='search-fr-name'>{recFriend.last_name}</p>
                     </div>
-                    <button className='search-add-btn'>Add Friend</button>
+                    <button onClick={() => this.handleAddFrndBtnClick(recFriend.user_id)} 
+                            className='search-add-btn'>Add Friend</button>
                   </div>
                 </div>
               )})

@@ -78,8 +78,8 @@ module.exports = {
 
   recFriendList: (req, res, next) => {
     const db = req.app.get('db');
-
-    db.get_rec_friends(req.user_id)
+    console.log(req.user)
+    db.get_rec_friends(req.user.user_id)
     .then(rec_friends => {res.status(200).send(rec_friends);})
     .catch(err => {
       console.log (err);
@@ -90,5 +90,18 @@ module.exports = {
   addRecFriend: (req, res, next) => {
     const db = req.app.get('db');    
 
+    db.add_friend(req.user.user_id, req.body.friendID)
+    .then(friends => {
+      db.get_rec_friends(req.user.user_id)
+      .then(rec_friends => {res.status(200).send(rec_friends);})
+      .catch(err => {
+        console.log (err);
+        res.status(500).send(err);
+      })
+    })
+    .catch(err => {
+      console.log (err);
+      res.status(500).send(err);
+    });  
   }
 }

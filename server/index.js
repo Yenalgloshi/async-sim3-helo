@@ -41,10 +41,10 @@ passport.use(new Auth0Strategy(
   },
   // The second parameter (this function), is what runs once we get back from Auth0. Having returned from Auth0, access is now available to some things we brought back with us. The "profile" parameter has all the information about the user.
   function(accessToken, refreshToken, extraParams, profile, done){
-    console.log('profile', profile.id);
+    // console.log('profile', profile.id);
     app.get('db').authenticate_user(profile.id).then(user => {
       if(user[0]) {
-        console.log(user[0])
+        // console.log(user[0])
         done(null, user[0]);
 
       } else {
@@ -60,14 +60,14 @@ passport.use(new Auth0Strategy(
 //  #3  Serialize (fires after authenticating with Auth0)
  passport.serializeUser((user, done) => {
   // This function accepts the user as a parameter. This will determine what information is saved on the cookie. This is what we are sending to our browser to remember.
-  console.log('serialize', user);
+  // console.log('serialize', user);
   done(null, user);
 });
 
 // #5  Deserialize (fires when any endpoints are hit)
 passport.deserializeUser((user, done) => {
   //  The serialize function accepts whatever was set on the cookie as a parameter. This takes the cookie and determines what parts of that cookie will be accessible on the back end.
-  console.log('deserialize', user);
+  // console.log('deserialize', user);
   done(null, user);
 });
 
@@ -106,7 +106,7 @@ app.patch('/api/patch/:id', ctrl.editUserProfile)
 app.get('/api/user/list', ctrl.listUsers)
 app.get('/api/user/search', ctrl.searchUsers)
 app.get('/api/user/total', ctrl.totNumOfUsers)
-app.post('/api/recommended', ctrl.recFriendList)
+app.get('/api/recommended', ctrl.recFriendList)
 app.post('/recommended/add', ctrl.addRecFriend)
 
 //LISTEN
