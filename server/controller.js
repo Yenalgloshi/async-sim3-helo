@@ -51,8 +51,8 @@ module.exports = {
 
   listUsers: (req, res, next) => {
     const db = req.app.get('db');
-
     db.get_user_list(req.params)
+    
     .then(users => { res.status(200).send(users);})
     .catch( err => {
       console.log(err);
@@ -79,7 +79,7 @@ module.exports = {
   recFriendList: (req, res, next) => {
     const db = req.app.get('db');
 
-    db.get_rec_friends()
+    db.get_rec_friends(req.user_id)
     .then(rec_friends => {res.status(200).send(rec_friends);})
     .catch(err => {
       console.log (err);

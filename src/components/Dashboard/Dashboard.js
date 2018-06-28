@@ -22,7 +22,6 @@ class Dashboard extends Component {
 
   componentDidMount() {
     axios.get('/api/auth/authenticated').then(res => {
-      console.log(res.data)
       this.setState({userInfo: res.data})
     })
 
@@ -92,8 +91,21 @@ class Dashboard extends Component {
             </div>
 
           </div>
-          <div className='dash-rec-list'>
-            No Recommendations
+          <div className='search-list-wpr'>
+            {this.state.recommendations.map((friend, i) => {
+              return(
+                <div className='search-fr-container' key={i}>
+                  <img className='search-fr-img' src={friend.profile_img} alt=""/>
+                  <div className='search-fr-nameBtn-wpr'>
+                    <div className='search-fr-name-wpr'>
+                      <p className='search-fr-name'>{friend.first_name}</p>
+                      <p className='search-fr-name'>{friend.last_name}</p>
+                    </div>
+                    <button className='search-add-btn'>Add Friend</button>
+                  </div>
+                </div>
+              )})
+            }
           </div>
           <div className='dash-rec-friend'>
 
