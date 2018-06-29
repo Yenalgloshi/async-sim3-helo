@@ -111,7 +111,7 @@ app.get('/api/user/list', ctrl.listUsers)
 app.get('/api/user/search', ctrl.searchUsers)
 app.get('/api/user/total', ctrl.totNumOfUsers)
 app.get('/api/recommended', ctrl.recFriendList)
-app.post('/recommended/add', ctrl.addRecFriend)
+app.post('/api/recommended/add', ctrl.addRecFriend)
 
 //LISTEN
 const port = 3333;

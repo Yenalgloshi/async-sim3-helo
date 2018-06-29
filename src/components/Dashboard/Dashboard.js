@@ -40,7 +40,7 @@ class Dashboard extends Component {
   }
   
   handleAddFrndBtnClick(friendID){
-    let promise = axios.post('/recommended/add', {friendID})
+    let promise = axios.post('/api/recommended/add', {friendID})
     promise.then(res => {this.setState( {recommendations: res.data} )
     })
   }

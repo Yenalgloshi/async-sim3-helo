@@ -11,7 +11,7 @@ module.exports = {
   friendsList: (req, res, next) => {
     const db = req.app.get('db');
 
-    db.get_friends(req.user_id)
+    db.get_friends(req.user.user_id)
     .then(friends => { res.status(200).send(friends);})
     .catch( err => {
       console.log(err);

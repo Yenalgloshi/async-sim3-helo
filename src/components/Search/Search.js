@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './Search.css';
 import Header from '../Header/Header';
-import Pagination from '../Pagination/Pagination';
 
 class Search extends Component {
   constructor(){
@@ -12,7 +11,9 @@ class Search extends Component {
       searchInput:'',
       allUsers: [],
       friends: [],
-      filterSearchResults: []
+      filterSearchResults: [],
+      pages: [],
+      searchCnt: 0
     }
 
   this.handleNameFilterInput = this.handleNameFilterInput.bind(this);
@@ -25,8 +26,18 @@ class Search extends Component {
   }
 
 componentDidMount(){
-  axios.get('/api/user/list').then(response => {
-    this.setState({allUsers: response.data})
+  axios.get('/api/user/list').then(res => {
+    console.log('all users', res.data)
+    this.setState({allUsers: res.data})
+  })
+  
+  axios.get('/api/friend/list').then(res => {
+    console.log('friends', res.data)
+    this.setState({friends: res.data})
+  })
+
+  axios.get('/api/user/total').then(res => {
+    this.setState({searchCnt: res.data[0].count})
   })
 }
 
@@ -58,7 +69,19 @@ handleNameFilterSelector(){
 
 }
 
+handlePgBtnClick() {
+    
+}
+
   render() {
+    let calcPages = Math.floor(this.state.searchCnt/8);
+    let offset = calcPages * 8;
+    console.log('calculated offset', offset)
+    let pgArr = [];
+    for (var i=1; i<=calcPages; i++){
+      pgArr.push(i);
+    }
+  
     return (
       <div className='searchView'>
         <Header title='Search'/>
@@ -94,7 +117,16 @@ handleNameFilterSelector(){
             }
           </div>
           <div className='search-pagination'>
-            <Pagination />
+            <div className='pagView'>
+              {pgArr.map((pgNum, i) => {
+                return (
+                  <button onClick={this.handlePgBtnClick} 
+                    key={i} 
+                    className='pag-btn' >
+                    {pgNum}</button>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
