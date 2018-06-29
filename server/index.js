@@ -60,7 +60,7 @@ passport.use(new Auth0Strategy(
 //  #3  Serialize (fires after authenticating with Auth0)
  passport.serializeUser((user, done) => {
   // This function accepts the user as a parameter. This will determine what information is saved on the cookie. This is what we are sending to our browser to remember.
-  console.log('serialize', user);
+  // console.log('serialize', user);
   done(null, user.user_id);
 });
 

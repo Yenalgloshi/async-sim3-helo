@@ -10,7 +10,8 @@ class Search extends Component {
 
     this.state = {
       searchInput:'',
-      searchResults: [],
+      allUsers: [],
+      friends: [],
       filterSearchResults: []
     }
 
@@ -25,8 +26,7 @@ class Search extends Component {
 
 componentDidMount(){
   axios.get('/api/user/list').then(response => {
-    this.setState({searchResults: response.data})
-    // console.log(this.state.searchResults)
+    this.setState({allUsers: response.data})
   })
 }
 
@@ -78,7 +78,7 @@ handleNameFilterSelector(){
               <button className='search-reset-btn'>Reset</button>
           </div>
           <div className='search-list-wpr'>
-            {this.state.searchResults.map((friend, i) => {
+            {this.state.allUsers.map((friend, i) => {
               return(
                 <div className='search-fr-container' key={i}>
                   <img className='search-fr-img' src={friend.profile_img} alt=""/>

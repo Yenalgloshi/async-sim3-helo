@@ -44,14 +44,12 @@ class Dashboard extends Component {
     promise.then(res => {this.setState( {recommendations: res.data} )
     })
   }
-  
-  
+    
   render() {
     let userCriteria = this.state.userInfo[this.state.sortCriteria];
     let filteredRecFriends = this.state.recommendations.filter((val) => {
       return val[this.state.sortCriteria] === userCriteria
     })
-    console.log('Bob is your uncle', this.state.userInfo[0])
 
     return (
       <div className='dashView'>
@@ -98,23 +96,27 @@ class Dashboard extends Component {
             </div>
 
           </div>
+          
           <div className='search-list-wpr'>
-            {filteredRecFriends.map((recFriend, i) => {
-              return(
-                <div className='search-fr-container' key={i}>
-                  <img className='search-fr-img' src={recFriend.profile_img} alt=""/>
-                  <div className='search-fr-nameBtn-wpr'>
-                    <div className='search-fr-name-wpr'>
-                      <p className='search-fr-name'>{recFriend.first_name}</p>
-                      <p className='search-fr-name'>{recFriend.last_name}</p>
-                    </div>
-                    <button onClick={() => this.handleAddFrndBtnClick(recFriend.user_id)} 
-                            className='search-add-btn'>Add Friend</button>
-                  </div>
-                </div>
-              )})
-            }
+            { filteredRecFriends === undefined || filteredRecFriends.length === 0
+              ?  <p className='dash-noRec'>No Recommendations</p>
+              :  filteredRecFriends.map((recFriend, i) => {      
+                  return(
+                      <div className='search-fr-container' key={i}>
+                          <img className='search-fr-img' src={recFriend.profile_img} alt=""/>
+                          <div className='search-fr-nameBtn-wpr'>
+                            <div className='search-fr-name-wpr'>
+                              <p className='search-fr-name'>{recFriend.first_name}</p>
+                              <p className='search-fr-name'>{recFriend.last_name}</p>
+                            </div>
+                            <button onClick={() => this.handleAddFrndBtnClick(recFriend.user_id)} 
+                                    className='search-add-btn'>Add Friend</button>
+                          </div>
+                      </div>
+                  )
+                })}
           </div>
+          
           <div className='dash-rec-friend'>
 
           </div>
@@ -122,8 +124,8 @@ class Dashboard extends Component {
       </div>
 </div>
 
-    );
-  }
+);
+}
 }
 
 export default Dashboard;

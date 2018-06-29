@@ -51,8 +51,7 @@ module.exports = {
 
   listUsers: (req, res, next) => {
     const db = req.app.get('db');
-    db.get_user_list(req.params)
-    
+    db.get_user_list(req.user.user_id)
     .then(users => { res.status(200).send(users);})
     .catch( err => {
       console.log(err);

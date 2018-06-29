@@ -103,8 +103,8 @@
   border: solid 1px #ccc3c3;
 }
 
-.dash-rec-list{
-
+.dash-noRec{
+  text-align: center;
 }
 
 .dash-rec-friend{
