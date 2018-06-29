@@ -60,15 +60,18 @@ passport.use(new Auth0Strategy(
 //  #3  Serialize (fires after authenticating with Auth0)
  passport.serializeUser((user, done) => {
   // This function accepts the user as a parameter. This will determine what information is saved on the cookie. This is what we are sending to our browser to remember.
-  // console.log('serialize', user);
-  done(null, user);
+  console.log('serialize', user);
+  done(null, user.user_id);
 });
 
 // #5  Deserialize (fires when any endpoints are hit)
-passport.deserializeUser((user, done) => {
+passport.deserializeUser((userID, done) => {
   //  The serialize function accepts whatever was set on the cookie as a parameter. This takes the cookie and determines what parts of that cookie will be accessible on the back end.
   // console.log('deserialize', user);
-  done(null, user);
+  const db = app.get('db');
+    db.get_user_info(userID)
+    .then(user => 
+  done(null, user[0]))
 });
 
 
@@ -87,6 +90,7 @@ app.get('/api/auth/login', passport.authenticate('auth0', {
 app.get('/api/auth/authenticated', (req, res) => {
   if (req.user) {
     res.status(200).send(req.user);
+    
   } else {
     res.sendStatus(403);
   }

@@ -66,7 +66,6 @@ handleUpdateBtnClick(){
       birth_year: this.state.birth_year
     })
     promise.then(res => {
-    console.log('update successful')
   })  
 }
 

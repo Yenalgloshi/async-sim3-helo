@@ -22,7 +22,6 @@ class Dashboard extends Component {
 
   componentDidMount() {
     axios.get('/api/auth/authenticated').then(res => {
-      // console.log(res.data)
       this.setState({userInfo: res.data})
     })
 
@@ -52,8 +51,7 @@ class Dashboard extends Component {
     let filteredRecFriends = this.state.recommendations.filter((val) => {
       return val[this.state.sortCriteria] === userCriteria
     })
-    console.log(userCriteria)
-    console.log(filteredRecFriends)
+    console.log('Bob is your uncle', this.state.userInfo[0])
 
     return (
       <div className='dashView'>
