@@ -13,7 +13,10 @@ class Search extends Component {
       friends: [],
       filterSearchResults: [],
       pages: [],
-      searchCnt: 0
+      usersPerPg: 10,
+      searchCnt: 0,
+      currentPg: 1,
+      offset: 0
     }
 
   this.handleNameFilterInput = this.handleNameFilterInput.bind(this);
@@ -27,12 +30,10 @@ class Search extends Component {
 
 componentDidMount(){
   axios.get('/api/user/list').then(res => {
-    console.log('all users', res.data)
     this.setState({allUsers: res.data})
   })
   
   axios.get('/api/friend/list').then(res => {
-    console.log('friends', res.data)
     this.setState({friends: res.data})
   })
 
@@ -74,13 +75,45 @@ handlePgBtnClick() {
 }
 
   render() {
-    let calcPages = Math.floor(this.state.searchCnt/8);
-    let offset = calcPages * 8;
+    let {searchCnt, usersPerPg, currentPg} = this.state;
+    let calcPages = Math.floor(searchCnt/usersPerPg);
+    let offset = (currentPg * usersPerPg) - usersPerPg;
     console.log('calculated offset', offset)
     let pgArr = [];
     for (var i=1; i<=calcPages; i++){
       pgArr.push(i);
     }
+
+    let friendsID = this.state.friends.map(friend => friend.user_id)
+    console.log('allUsers info on state', this.state.allUsers)
+    let newList = this.state.allUsers.map((user, i) => {
+      if (friendsID.includes(user.user_id)) {
+        return(
+          <div className='search-fr-container' key={i}>
+            <img className='search-fr-img' src={user.profile_img} alt=""/>
+            <div className='search-fr-nameBtn-wpr'>
+              <div className='search-fr-name-wpr'>
+                <p className='search-fr-name'>{user.first_name}</p>
+                <p className='search-fr-name'>{user.last_name}</p>
+              </div>
+              <button className='search-remove-btn'>Remove Friend</button>
+            </div>
+          </div>
+        )
+      } else{
+        return(
+          <div className='search-fr-container' key={i}>
+            <img className='search-fr-img' src={user.profile_img} alt=""/>
+            <div className='search-fr-nameBtn-wpr'>
+              <div className='search-fr-name-wpr'>
+                <p className='search-fr-name'>{user.first_name}</p>
+                <p className='search-fr-name'>{user.last_name}</p>
+              </div>
+              <button className='search-add-btn'>Add Friend</button>
+            </div>
+          </div>)
+          }
+    })
   
     return (
       <div className='searchView'>
@@ -101,20 +134,7 @@ handlePgBtnClick() {
               <button className='search-reset-btn'>Reset</button>
           </div>
           <div className='search-list-wpr'>
-            {this.state.allUsers.map((friend, i) => {
-              return(
-                <div className='search-fr-container' key={i}>
-                  <img className='search-fr-img' src={friend.profile_img} alt=""/>
-                  <div className='search-fr-nameBtn-wpr'>
-                    <div className='search-fr-name-wpr'>
-                      <p className='search-fr-name'>{friend.first_name}</p>
-                      <p className='search-fr-name'>{friend.last_name}</p>
-                    </div>
-                    <button className='search-remove-btn'>Remove Friend</button>
-                  </div>
-                </div>
-              )})
-            }
+            {newList}
           </div>
           <div className='search-pagination'>
             <div className='pagView'>
