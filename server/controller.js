@@ -1,13 +1,4 @@
 module.exports = {
-  loginUser: (req, res, next) => {
-
-  },
-
-  logoutUser: (req, res, next) => {
-    const db = req.app.get('db');
-
-  },
-
   friendsList: (req, res, next) => {
     const db = req.app.get('db');
 
@@ -58,8 +49,6 @@ module.exports = {
       console.log(err);
       res.status(500).send(err);
     });
- 
-    console.log('offset passed to endpoint', req.body)
   },
   
   totNumOfUsers: (req, res, next) => {

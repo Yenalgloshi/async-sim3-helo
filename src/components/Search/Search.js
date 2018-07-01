@@ -16,7 +16,8 @@ class Search extends Component {
       usersPerPg: 10,
       searchCnt: 0,
       currentPg: 1,
-      offset: 0
+      offset: 0,
+      name: ''
     }
 
   this.handleNameFilterInput = this.handleNameFilterInput.bind(this);
@@ -42,8 +43,8 @@ componentDidMount(){
   })
 }
 
-handleNameFilterInput(){
-
+handleNameFilterInput(val){
+  this.setState({name: val})
 }
 
 handlePageNumBtnClick(userOffset){
@@ -75,13 +76,9 @@ handleNameFilterSelector(){
 
 }
 
-handlePgBtnClick() {
-    
-}
-
   render() {
-    let {searchCnt, usersPerPg, currentPg} = this.state;
-    let calcPages = Math.floor(searchCnt/usersPerPg);
+    let {searchCnt, usersPerPg} = this.state;
+    let calcPages = Math.floor((searchCnt/usersPerPg) + 1);
     // let calcOffset = (currentPg * usersPerPg) - usersPerPg;
     // console.log('calculated offset', offset)
     let pgArr = [];
@@ -134,7 +131,9 @@ handlePgBtnClick() {
                 <option value="First Name">First Name</option>
                 <option value="Last Name">Last Name</option>
               </select>
-              <input className='search-field' type="text"/>
+              <input onChange={(e) => this.handleNameFilterInput(e.target.value)} 
+                     className='search-field' 
+                     type="text"/>
               <button className='search-btn'>Search</button>
               <button className='search-reset-btn'>Reset</button>
           </div>
