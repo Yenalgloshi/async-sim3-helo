@@ -29,7 +29,7 @@ class Search extends Component {
   }
 
 componentDidMount(){
-  axios.get('/api/user/list').then(res => {
+  axios.post('/api/user/list', this.state.offset).then(res => {
     this.setState({allUsers: res.data})
   })
   
@@ -46,8 +46,13 @@ handleNameFilterInput(){
 
 }
 
-handlePageNumBtnClick(){
-
+handlePageNumBtnClick(userOffset){
+  this.setState({offset: userOffset})
+  
+  let promise = axios.post('/api/user/list', {userOffset})
+  promise.then(res => {this.setState({allUsers: res.data})
+    console.log('page button #', this.state.offset)
+  })
 }
 
 handleSearchBtnClick(){
@@ -77,15 +82,15 @@ handlePgBtnClick() {
   render() {
     let {searchCnt, usersPerPg, currentPg} = this.state;
     let calcPages = Math.floor(searchCnt/usersPerPg);
-    let offset = (currentPg * usersPerPg) - usersPerPg;
-    console.log('calculated offset', offset)
+    // let calcOffset = (currentPg * usersPerPg) - usersPerPg;
+    // console.log('calculated offset', offset)
     let pgArr = [];
     for (var i=1; i<=calcPages; i++){
       pgArr.push(i);
     }
 
     let friendsID = this.state.friends.map(friend => friend.user_id)
-    console.log('allUsers info on state', this.state.allUsers)
+    // console.log('allUsers info on state', this.state.allUsers)
     let newList = this.state.allUsers.map((user, i) => {
       if (friendsID.includes(user.user_id)) {
         return(
@@ -140,7 +145,7 @@ handlePgBtnClick() {
             <div className='pagView'>
               {pgArr.map((pgNum, i) => {
                 return (
-                  <button onClick={this.handlePgBtnClick} 
+                  <button onClick={() => this.handlePageNumBtnClick((pgNum * usersPerPg) - usersPerPg)} 
                     key={i} 
                     className='pag-btn' >
                     {pgNum}</button>

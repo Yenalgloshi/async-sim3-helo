@@ -51,12 +51,15 @@ module.exports = {
 
   listUsers: (req, res, next) => {
     const db = req.app.get('db');
-    db.get_user_list(req.user.user_id)
+
+    db.get_user_list(req.user.user_id, req.body.userOffset)
     .then(users => { res.status(200).send(users);})
     .catch( err => {
       console.log(err);
       res.status(500).send(err);
     });
+ 
+    console.log('offset passed to endpoint', req.body)
   },
   
   totNumOfUsers: (req, res, next) => {
