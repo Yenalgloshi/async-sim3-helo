@@ -26,8 +26,8 @@
 }
 
 .auth-btn{
-  text-align: center;
-  width: 70%;
+  /* text-align: center; */
+  /* width: 70%; */
   height: 35px;
   color: white;
   font-size: 1.1em;
@@ -35,6 +35,9 @@
   background-image: radial-gradient(circle at 50% 46%, #737373, #403d39);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   border: none;
+  text-decoration-line: none;
+  padding-top: 7px;
+
 }
 
 .auth-title{

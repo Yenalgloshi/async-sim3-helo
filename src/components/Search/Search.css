@@ -154,7 +154,19 @@
 .search-pagination{
   display: flex;
   justify-content:center;
-  align-items: flex-end;
+  align-items: center;
+  flex-direction: row;
   height: 40px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ff9770;
 }
 
+.search-pag-btn-wpr{
+}
+
+.search-pag-btn{
+  margin: 2px;
+  
+}

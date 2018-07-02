@@ -77,7 +77,8 @@ handleDelFrndBtnClick(friendID){
 }
 
 handleResetBtnClick(){
-  this.setState({searchInput: '', searchSelection: ''})
+  this.setState({searchInput: ''})
+  this.setState({searchSelection: ''})
 }
 
 handleNameFilterSelector(val){
@@ -140,20 +141,23 @@ handleNameFilterSelector(val){
               </select>
               <input onChange={(e) => this.handleNameFilterInput(e.target.value)} 
                      className='search-field' 
-                     type="text"/>
-              <button className='search-btn'>Search</button>
-              <button className='search-reset-btn'>Reset</button>
+                     type="text"
+                     value={this.state.searchInput}/>
+              <button onClick={this.handleSearchBtnClick} 
+                      className='search-btn'>Search</button>
+              <button onClick={this.handleResetBtnClick} 
+                      className='search-reset-btn'>Reset</button>
           </div>
           <div className='search-list-wpr'>
             {newList}
           </div>
           <div className='search-pagination'>
-            <div className='pagView'>
+            <div className='search-pag-btn-wpr'>
               {pgArr.map((pgNum, i) => {
                 return (
                   <button onClick={() => this.handlePageNumBtnClick((pgNum * usersPerPg) - usersPerPg)} 
                     key={i} 
-                    className='pag-btn' >
+                    className='search-pag-btn' >
                     {pgNum}</button>
                 )
               })}
