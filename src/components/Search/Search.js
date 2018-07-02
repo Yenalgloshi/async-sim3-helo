@@ -17,6 +17,7 @@ class Search extends Component {
       pages: [],
       usersPerPg: 10,
       currentPg: 1,
+      searchBtnActive: false
     }
 
   this.handleNameFilterInput = this.handleNameFilterInput.bind(this);
@@ -55,7 +56,7 @@ handlePageNumBtnClick(userOffset){
 }
 
 handleSearchBtnClick(){
-
+  this.setState({searchBtnActive: !this.state.searchBtnActive})
 }
 
 handleAddFrndBtnClick(friendID){
@@ -79,6 +80,7 @@ handleDelFrndBtnClick(friendID){
 handleResetBtnClick(){
   this.setState({searchInput: ''})
   this.setState({searchSelection: ''})
+  this.setState({searchBtnActive: false})
 }
 
 handleNameFilterSelector(val){
@@ -94,7 +96,43 @@ handleNameFilterSelector(val){
     }
 
     let friendsID = this.state.friends.map(friend => friend.user_id)
-    let newList = this.state.allUsers.map((user, i) => {
+    let allSearchList = this.state.allUsers.map((user, i) => {
+        if (friendsID.includes(user.user_id)) {
+          return(
+            <div className='search-fr-container' key={i}>
+              <img className='search-fr-img' src={user.profile_img} alt=""/>
+              <div className='search-fr-nameBtn-wpr'>
+                <div className='search-fr-name-wpr'>
+                  <p className='search-fr-name'>{user.first_name}</p>
+                  <p className='search-fr-name'>{user.last_name}</p>
+                </div>
+                <button onClick={()=> this.handleDelFrndBtnClick(user.user_id)} 
+                        className='search-remove-btn'>Remove Friend</button>
+              </div>
+            </div>
+          )
+        } else{
+          return(
+            <div className='search-fr-container' key={i}>
+              <img className='search-fr-img' src={user.profile_img} alt=""/>
+              <div className='search-fr-nameBtn-wpr'>
+                <div className='search-fr-name-wpr'>
+                  <p className='search-fr-name'>{user.first_name}</p>
+                  <p className='search-fr-name'>{user.last_name}</p>
+                </div>
+                <button onClick={() => this.handleAddFrndBtnClick(user.user_id)} 
+                        className='search-add-btn'>Add Friend</button>
+              </div>
+            </div>)
+            }
+      })
+
+      let searchResults = this.state.allUsers.filter((val) => {
+        return val[this.state.searchSelection] === this.state.searchInput
+      })  
+      // console.log('search results', searchResults)
+
+      let specificSearchList = searchResults.map((user, i) => {
         if (friendsID.includes(user.user_id)) {
           return(
             <div className='search-fr-container' key={i}>
@@ -149,7 +187,7 @@ handleNameFilterSelector(val){
                       className='search-reset-btn'>Reset</button>
           </div>
           <div className='search-list-wpr'>
-            {newList}
+            {this.state.searchBtnActive === false ? allSearchList : specificSearchList}
           </div>
           <div className='search-pagination'>
             <div className='search-pag-btn-wpr'>
