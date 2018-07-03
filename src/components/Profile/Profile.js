@@ -142,7 +142,7 @@ handleBYearSelector(val){
             <img src={this.state.profile_img} 
                  className='profile-img' 
                  alt="me"/>
-            {/* below name will be rendered from state */}
+
             <h3 className='profile-name-wpr'>
               <p className='profile-name'>
                 {this.state.first_name}

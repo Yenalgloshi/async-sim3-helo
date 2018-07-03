@@ -3,7 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const massive = require('massive');
 const session = require('express-session');
-// Passport is a vehicle that can be used to have different kinds of sign-ins. One of the options available is Auth0. That is the reason for  requiring both passport and passport-Auth0.
+// Passport is a vehicle that can be used to have different kinds of sign-ins. 
+// One of the options available is Auth0. That is the reason for requiring 
+// both passport and passport-Auth0.
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 require('dotenv').config()
@@ -30,7 +32,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// #2  The Auth0 strategy is set up here so passport knows what to use when authenticating. This tells passport to use a new Auth0Strategy and invoke the Auth0Strategy. The first parameter is a connection object (how we get to Auth0). The key:value pairs point to the information that was set up in the .env file.
+// #2  The Auth0 strategy is set up here so passport knows what to use when authenticating. 
+//     This tells passport to use a new Auth0Strategy and invoke the Auth0Strategy. 
+//     The first parameter is a connection object (how we get to Auth0). The key:value pairs 
+//     point to the information that was set up in the .env file.
 passport.use(new Auth0Strategy(
   {
    domain: process.env.DOMAIN,
@@ -39,7 +44,9 @@ passport.use(new Auth0Strategy(
    callbackURL: process.env.CALLBACK_URL,
    scope: 'openid profile email'
   },
-  // The second parameter (this function), is what runs once we get back from Auth0. Having returned from Auth0, access is now available to some things we brought back with us. The "profile" parameter has all the information about the user.
+  // The second parameter (this function), is what runs once we get back from Auth0. 
+  // Having returned from Auth0, access is now available to some things we brought 
+  //  back with us. The "profile" parameter has all the information about the user.
   function(accessToken, refreshToken, extraParams, profile, done){
     // console.log('profile', profile.id);
     app.get('db').authenticate_user(profile.id).then(user => {
@@ -50,7 +57,6 @@ passport.use(new Auth0Strategy(
       } else {
         app.get('db').register_user(profile.id, `https://robohash.org/${profile.user_id}`).then(user => {
           done(null, user[0]);
-
         })
       }
     })
@@ -59,14 +65,16 @@ passport.use(new Auth0Strategy(
 
 //  #3  Serialize (fires after authenticating with Auth0)
  passport.serializeUser((user, done) => {
-  // This function accepts the user as a parameter. This will determine what information is saved on the cookie. This is what we are sending to our browser to remember.
+  // This function accepts the user as a parameter. This will determine what 
+  //  information is saved on the cookie. This is what we are sending to our browser to remember.
   // console.log('serialize', user);
   done(null, user.user_id);
 });
 
 // #5  Deserialize (fires when any endpoints are hit)
 passport.deserializeUser((userID, done) => {
-  //  The serialize function accepts whatever was set on the cookie as a parameter. This takes the cookie and determines what parts of that cookie will be accessible on the back end.
+  //  The serialize function accepts whatever was set on the cookie as a parameter. 
+  //  This takes the cookie and determines what parts of that cookie will be accessible on the back end.
   // console.log('deserialize', user);
   const db = app.get('db');
     db.get_user_info(userID)

@@ -46,7 +46,10 @@ class Dashboard extends Component {
   }
     
   render() {
+    //  this gets the selected sort criteria from the users info
     let userCriteria = this.state.userInfo[this.state.sortCriteria];
+    //  this get all the recommended friends and compares their sort attribute
+    //   to the users attribute
     let filteredRecFriends = this.state.recommendations.filter((val) => {
       return val[this.state.sortCriteria] === userCriteria
     })
@@ -60,7 +63,7 @@ class Dashboard extends Component {
             <img src={this.state.userInfo.profile_img} 
                  className='dash-profile-img' 
                  alt="me"/>
-            {/* below name will be rendered from state */}
+            {/* users name will be rendered from state */}
             <h3 className='dash-name-wpr'>
               <p className='dash-profile-name'>
                 {this.state.userInfo.first_name}
@@ -97,6 +100,7 @@ class Dashboard extends Component {
 
           </div>
           
+          {/* conditional rendering if there are no recommended friends or if there are recommended friends */}
           <div className='search-list-wpr'>
             { filteredRecFriends === undefined || filteredRecFriends.length === 0
               ?  <p className='dash-noRec'>No Recommendations</p>

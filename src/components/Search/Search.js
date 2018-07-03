@@ -99,14 +99,21 @@ handleNameFilterSelector(val){
 
   render() {
     let {searchCnt, usersPerPg} = this.state;
+    // this calculates how many pages there will be
     let calcPages = Math.floor((searchCnt/usersPerPg) + 1);
+    // this creates a page number array
     let pgArr = [];
     for (var i=1; i<=calcPages; i++){
       pgArr.push(i);
     }
 
+    // this creates a friends id array that can be used to compare to all users
+    // to determine who and who isn't a friend
     let friendsID = this.state.friends.map(friend => friend.user_id)
     let allSearchList = this.state.allUsers.map((user, i) => {
+        // the friendsID array is then compared to all the users id and if 
+        // they're a friend render with Remove Friend button, else render 
+        // with a Add Friend button.
         if (friendsID.includes(user.user_id)) {
           return(
             <div className='search-fr-container' key={i}>
@@ -141,7 +148,8 @@ handleNameFilterSelector(val){
       //   return val[this.state.searchSelection] === this.state.searchInput
       // })  
       // console.log('search results', searchResults)
-
+      // when a search criteria is entered and the search button is clicked,
+      // the search result is saved and rendered here with appropriate Add/Remove Friend button
       let specificSearchList = this.state.searchedUsers.map((user, i) => {
         if (friendsID.includes(user.user_id)) {
           return(
@@ -203,9 +211,11 @@ handleNameFilterSelector(val){
           </div>
           <div className='search-pagination'>
             <div className='search-pag-btn-wpr'>
-              {pgArr.map((pgNum, i) => {
+              {pgArr.map((pgNum, i) => {     // this maps thru the page array
                 return(
-                  this.state.currentPg === pgNum
+                  // this renders the page button indication/styling by testing if an element in the page array
+                  //  is equal to the current page.
+                  this.state.currentPg === pgNum   
                     ?  <button onClick={() => this.handlePageNumBtnClick(pgNum, (pgNum * usersPerPg) - usersPerPg)} 
                           key={i} 
                           className={'search-currPag-btn'} >
