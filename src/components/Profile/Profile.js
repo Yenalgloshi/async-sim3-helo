@@ -2,6 +2,7 @@ import './Profile.css';
 import React, { Component } from 'react';
 import axios from 'axios';
 import Header from '../Header/Header';
+import {Link} from 'react-router-dom';
 
 class Profile extends Component {
   constructor(){
@@ -152,8 +153,10 @@ handleBYearSelector(val){
             </h3>
           </div>
           <div className='profile-btns'>
-            <button onClick={this.handleUpdateBtnClick}
-                    className='profile-update-btn'>Update</button>
+            <Link to='/dashboard'>
+              <button onClick={this.handleUpdateBtnClick}
+                      className='profile-update-btn'>Update</button>
+            </Link>
             <button onClick={this.handleCancelBtnClick} 
                     className='profile-cancel-btn'>Cancel</button>
           </div>
