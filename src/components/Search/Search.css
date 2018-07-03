@@ -163,7 +163,13 @@
   background-color: #ff9770;
 }
 
-.search-pag-btn-wpr{
+.search-currPag-btn{
+  width: 60px;
+  color: white;
+  background-color: #403d39;
+  border: none;
+  height: 22px;
+  margin: 2px;
 }
 
 .search-pag-btn{

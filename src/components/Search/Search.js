@@ -17,7 +17,8 @@ class Search extends Component {
       pages: [],
       usersPerPg: 10,
       currentPg: 1,
-      searchBtnActive: false
+      searchBtnActive: false,
+      searchedUsers: []
     }
 
   this.handleNameFilterInput = this.handleNameFilterInput.bind(this);
@@ -47,16 +48,21 @@ handleNameFilterInput(val){
   this.setState({searchInput: val})
 }
 
-handlePageNumBtnClick(userOffset){
+handlePageNumBtnClick(btnPage, userOffset){
   this.setState({offset: userOffset})
-  
+  this.setState({currentPg: btnPage})
   let promise = axios.post('/api/user/list', {userOffset})
   promise.then(res => {this.setState({allUsers: res.data})
   })
 }
 
 handleSearchBtnClick(){
+  let {searchSelection, searchInput} = this.state 
   this.setState({searchBtnActive: !this.state.searchBtnActive})
+  let promise = axios.post('/api/user/search', {searchSelection, searchInput})
+  promise.then(res => {this.setState({searchedUsers: res.data})
+  console.log('res.data', res.data)
+  })
 }
 
 handleAddFrndBtnClick(friendID){
@@ -127,12 +133,12 @@ handleNameFilterSelector(val){
             }
       })
 
-      let searchResults = this.state.allUsers.filter((val) => {
-        return val[this.state.searchSelection] === this.state.searchInput
-      })  
+      // let searchResults = this.state.allUsers.filter((val) => {
+      //   return val[this.state.searchSelection] === this.state.searchInput
+      // })  
       // console.log('search results', searchResults)
 
-      let specificSearchList = searchResults.map((user, i) => {
+      let specificSearchList = this.state.searchedUsers.map((user, i) => {
         if (friendsID.includes(user.user_id)) {
           return(
             <div className='search-fr-container' key={i}>
@@ -177,6 +183,7 @@ handleNameFilterSelector(val){
                 <option value="first_name">First Name</option>
                 <option value="last_name">Last Name</option>
               </select>
+
               <input onChange={(e) => this.handleNameFilterInput(e.target.value)} 
                      className='search-field' 
                      type="text"
@@ -185,6 +192,7 @@ handleNameFilterSelector(val){
                       className='search-btn'>Search</button>
               <button onClick={this.handleResetBtnClick} 
                       className='search-reset-btn'>Reset</button>
+
           </div>
           <div className='search-list-wpr'>
             {this.state.searchBtnActive === false ? allSearchList : specificSearchList}
@@ -192,11 +200,16 @@ handleNameFilterSelector(val){
           <div className='search-pagination'>
             <div className='search-pag-btn-wpr'>
               {pgArr.map((pgNum, i) => {
-                return (
-                  <button onClick={() => this.handlePageNumBtnClick((pgNum * usersPerPg) - usersPerPg)} 
-                    key={i} 
-                    className='search-pag-btn' >
-                    {pgNum}</button>
+                return(
+                  this.state.currentPg === pgNum
+                    ?  <button onClick={() => this.handlePageNumBtnClick(pgNum, (pgNum * usersPerPg) - usersPerPg)} 
+                          key={i} 
+                          className={'search-currPag-btn'} >
+                          Page{pgNum}</button>
+                    : <button onClick={() => this.handlePageNumBtnClick(pgNum, (pgNum * usersPerPg) - usersPerPg)} 
+                        key={i} 
+                        className={'search-pag-btn'} >
+                        {pgNum}</button>
                 )
               })}
             </div>

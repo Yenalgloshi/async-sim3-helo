@@ -88,8 +88,23 @@ module.exports = {
   },
 
   searchUsers: (req, res, next) => {
-    const db = req.app.get('db');
-
+    if(req.body.searchSelection === 'first_name'){
+      const db = req.app.get('db');
+      db.get_searched_firstName(req.body.searchInput)
+      .then(searchedUser => {res.status(200).send(searchedUser);})
+      .catch(err => {
+        console.log (err);
+        res.status(500).send(err);
+      }); 
+  } else {
+      const db = req.app.get('db');
+      db.get_searched_lastName(req.body.searchInput)
+      .then(searchedUser => {res.status(200).send(searchedUser);})
+      .catch(err => {
+        console.log (err);
+        res.status(500).send(err);
+      });
+    }
   },
 
   recFriendList: (req, res, next) => {
