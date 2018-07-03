@@ -66,7 +66,9 @@ handleSearchBtnClick(){
 }
 
 handleAddFrndBtnClick(friendID){
-  let promise = axios.post('/api/friend/add', {friendID}, this.state.offset)
+  let {offset} = this.state;
+  this.setState({currentPg: this.state.currentPg})
+  let promise = axios.post('/api/friend/add', {friendID, offset})
   promise.then(res => {this.setState( {allUsers: res.data} )
   })
   axios.get('/api/friend/list').then(res => {
@@ -75,7 +77,9 @@ handleAddFrndBtnClick(friendID){
 }
 
 handleDelFrndBtnClick(friendID){
-  let promise = axios.post('/api/friend/remove', {friendID}, this.state.offset)
+  let {offset} = this.state;
+  this.setState({currentPg: this.state.currentPg})
+  let promise = axios.post('/api/friend/remove', {friendID, offset})
   promise.then(res => {this.setState({allUsers: res.data})
   })
   axios.get('/api/friend/list').then(res => {

@@ -15,12 +15,13 @@ module.exports = {
 
     db.add_friend(req.user.user_id, req.body.friendID)
     .then(users => {
-      db.get_user_list(req.user.user_id, req.body.userOffset)
+      db.get_user_list(req.user.user_id, req.body.offset)
       .then(users => { res.status(200).send(users);})
       .catch( err => {
         console.log(err);
         res.status(500).send(err);
       });
+      console.log('user offset #', req.body.offset)
     })
     .catch( err => {
       console.log(err);
@@ -32,7 +33,7 @@ module.exports = {
     const db = req.app.get('db');
     db.del_user_friend(req.user.user_id, req.body.friendID)
     .then(users => {
-      db.get_user_list(req.user.user_id, req.body.userOffset)
+      db.get_user_list(req.user.user_id, req.body.offset)
       .then(users => { res.status(200).send(users);})
       .catch( err => {
         console.log(err);
